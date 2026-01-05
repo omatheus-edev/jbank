@@ -1,7 +1,8 @@
-package codes.matheus.entity.account;
+package codes.matheus.entity.client;
 
-import codes.matheus.entity.account.data.CPF;
-import codes.matheus.entity.account.data.PhoneNumber;
+import codes.matheus.entity.account.Accounts;
+import codes.matheus.entity.client.data.CPF;
+import codes.matheus.entity.client.data.PhoneNumber;
 import org.jetbrains.annotations.NotNull;
 
 public interface Client {

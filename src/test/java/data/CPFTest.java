@@ -1,6 +1,6 @@
 package data;
 
-import codes.matheus.entity.account.data.CPF;
+import codes.matheus.entity.client.data.CPF;
 import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.Test;
 

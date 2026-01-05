@@ -1,14 +1,14 @@
 package data;
 
-import codes.matheus.entity.account.data.PhoneNumber;
+import codes.matheus.entity.client.data.PhoneNumber;
 import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public final class PhoneNumberTest {
-    private @NotNull PhoneNumber.DDD dddSP = PhoneNumber.DDD.SP_12;
-    private @NotNull PhoneNumber.DDD dddRJ = PhoneNumber.DDD.RJ_21;
+    private final @NotNull PhoneNumber.DDD dddSP = PhoneNumber.DDD.SP_12;
+    private final @NotNull PhoneNumber.DDD dddRJ = PhoneNumber.DDD.RJ_21;
 
     @Test
     void validatePhoneNumberTest() {

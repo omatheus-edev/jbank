@@ -1,4 +1,4 @@
-package codes.matheus.entity.account.data;
+package codes.matheus.entity.client.data;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Range;

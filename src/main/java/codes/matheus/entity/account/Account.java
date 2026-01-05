@@ -1,9 +1,16 @@
 package codes.matheus.entity.account;
 
+import codes.matheus.entity.client.Client;
+import codes.matheus.entity.transaction.Deposit;
+import codes.matheus.entity.transaction.Transaction;
+import codes.matheus.entity.transaction.Withdrawal;
+import codes.matheus.exception.TransactionException;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Range;
 
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicLong;
 
 public abstract class Account {
@@ -15,6 +22,7 @@ public abstract class Account {
     @Range(from = 0, to = Long.MAX_VALUE)
     private double balance;
     private final @NotNull Client client;
+    private final @NotNull Set<@NotNull Transaction> history = new HashSet<>();
 
     // Constructor
 
@@ -40,16 +48,31 @@ public abstract class Account {
         return client;
     }
 
+    public @NotNull Set<@NotNull Transaction> getHistory() {
+        return history;
+    }
+
+    // Setter
+
+    public void setBalance(@NotNull Transaction transaction) throws TransactionException {
+        if (history.contains(transaction)) {
+            throw new TransactionException("This account already has this transaction");
+        } else {
+            this.balance = transaction.calculate(this);
+            this.history.add(transaction);
+        }
+    }
+
     // Methods
 
     @Range(from = 0, to = Long.MAX_VALUE)
-    public abstract double withdraw(@Range(from = 0, to = Long.MAX_VALUE) double amount);
+    public abstract @NotNull Withdrawal withdraw(@Range(from = 0, to = Long.MAX_VALUE) double amount);
 
     @Range(from = 0, to = Long.MAX_VALUE)
-    public abstract double deposit(@Range(from = 0, to = Long.MAX_VALUE) double amount);
+    public abstract @NotNull Deposit deposit(@Range(from = 0, to = Long.MAX_VALUE) double amount);
 
     @Range(from = 0, to = Long.MAX_VALUE)
-    public abstract double transfer(@NotNull Account receiver, @Range(from = 0, to = Long.MAX_VALUE) double amount);
+    public abstract @NotNull Transaction transfer(@NotNull Account receiver, @Range(from = 0, to = Long.MAX_VALUE) double amount);
 
     // equals and hashCode
 
