@@ -1,17 +1,17 @@
 package codes.matheus.entity.account;
 
+import codes.matheus.entity.account.data.CPF;
+import codes.matheus.entity.account.data.PhoneNumber;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Range;
 
 public interface Client {
     @NotNull String getName();
 
-    @NotNull String getCpf();
+    @NotNull CPF getCpf();
 
     @NotNull String getEmail();
 
-    @Range(from = 0, to = Integer.MAX_VALUE)
-    int getNumber();
+    @NotNull PhoneNumber getNumber();
 
     @NotNull Accounts getAccounts();
 }

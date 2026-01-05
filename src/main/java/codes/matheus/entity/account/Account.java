@@ -40,6 +40,17 @@ public abstract class Account {
         return client;
     }
 
+    // Methods
+
+    @Range(from = 0, to = Long.MAX_VALUE)
+    public abstract double withdraw(@Range(from = 0, to = Long.MAX_VALUE) double amount);
+
+    @Range(from = 0, to = Long.MAX_VALUE)
+    public abstract double deposit(@Range(from = 0, to = Long.MAX_VALUE) double amount);
+
+    @Range(from = 0, to = Long.MAX_VALUE)
+    public abstract double transfer(@NotNull Account receiver, @Range(from = 0, to = Long.MAX_VALUE) double amount);
+
     // equals and hashCode
 
     @Override
@@ -53,17 +64,6 @@ public abstract class Account {
     public int hashCode() {
         return Objects.hashCode(id);
     }
-
-    // Methods
-
-    @Range(from = 0, to = Long.MAX_VALUE)
-    public abstract double withdraw(@Range(from = 0, to = Long.MAX_VALUE) double amount);
-
-    @Range(from = 0, to = Long.MAX_VALUE)
-    public abstract double deposit(@Range(from = 0, to = Long.MAX_VALUE) double amount);
-
-    @Range(from = 0, to = Long.MAX_VALUE)
-    public abstract double transfer(@NotNull Account receiver, @Range(from = 0, to = Long.MAX_VALUE) double amount);
 
     // Classes
 
