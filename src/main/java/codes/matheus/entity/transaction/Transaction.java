@@ -12,11 +12,24 @@ import java.util.concurrent.atomic.AtomicLong;
 
 public abstract sealed class Transaction permits Deposit, Withdrawal, Transference {
 
-    public static @NotNull Transaction create(@NotNull Account origin, @Nullable Account target, @NotNull Type type, @Range(from = 0, to = Long.MAX_VALUE) double value) {
+    @SuppressWarnings("unchecked")
+    public  static <T extends Transaction> @NotNull T create(@NotNull Account origin, @Nullable Account target, @NotNull Type type, @Range(from = 0, to = Long.MAX_VALUE) double value) {
         if (value <= 0) {
             throw new IllegalArgumentException("Transaction value must be greater than zero");
         }
-        return type.create(origin, target, value);
+        return (T) type.create(origin, target, value);
+    }
+
+    public static @NotNull Withdrawal withdrawal(@NotNull Account origin, @Range(from = 0, to = Long.MAX_VALUE) double value) {
+        return create(origin, null, Type.WITHDRAWAL, value);
+    }
+
+    public static @NotNull Deposit deposit(@NotNull Account origin, @Range(from = 0, to = Long.MAX_VALUE) double value) {
+        return create(origin, null, Type.DEPOSIT, value);
+    }
+
+    public static @NotNull Transference transference(@NotNull Account origin, @NotNull Account target, @Range(from = 0, to = Long.MAX_VALUE) double value) {
+        return create(origin, target, Type.TRANSFERENCE, value);
     }
 
     @Range(from = 0, to = Long.MAX_VALUE)

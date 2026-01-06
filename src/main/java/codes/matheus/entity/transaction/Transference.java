@@ -12,10 +12,6 @@ public final class Transference extends Transaction {
 
     @Override
     public double calculate(@NotNull Account account) throws TransactionException {
-        if (account.equals(getOrigin()) && getOrigin().getBalance() < getValue()) {
-            throw new TransactionException("Insufficient balance for transference");
-        }
-
         if (account.equals(getOrigin())) {
             return account.getBalance() - getValue();
         } else if (account.equals(getTarget())) {

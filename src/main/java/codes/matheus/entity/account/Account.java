@@ -8,12 +8,12 @@ import codes.matheus.exception.TransactionException;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Range;
 
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicLong;
 
-public abstract class Account {
+public abstract sealed class Account permits SavingsAccount, CheckingAccount {
 
     // Objects
 
@@ -22,7 +22,7 @@ public abstract class Account {
     @Range(from = 0, to = Long.MAX_VALUE)
     private double balance;
     private final @NotNull Client client;
-    private final @NotNull Set<@NotNull Transaction> history = new HashSet<>();
+    private final @NotNull Set<@NotNull Transaction> history = new LinkedHashSet<>();
 
     // Constructor
 
@@ -65,14 +65,9 @@ public abstract class Account {
 
     // Methods
 
-    @Range(from = 0, to = Long.MAX_VALUE)
-    public abstract @NotNull Withdrawal withdraw(@Range(from = 0, to = Long.MAX_VALUE) double amount);
+    public abstract @NotNull Withdrawal withdraw(@Range(from = 0, to = Long.MAX_VALUE) double amount) throws TransactionException;
 
-    @Range(from = 0, to = Long.MAX_VALUE)
-    public abstract @NotNull Deposit deposit(@Range(from = 0, to = Long.MAX_VALUE) double amount);
-
-    @Range(from = 0, to = Long.MAX_VALUE)
-    public abstract @NotNull Transaction transfer(@NotNull Account receiver, @Range(from = 0, to = Long.MAX_VALUE) double amount);
+    public abstract @NotNull Deposit deposit(@Range(from = 0, to = Long.MAX_VALUE) double amount) throws TransactionException;
 
     // equals and hashCode
 

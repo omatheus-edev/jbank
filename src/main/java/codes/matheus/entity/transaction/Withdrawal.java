@@ -14,8 +14,6 @@ public final class Withdrawal extends Transaction {
     public double calculate(@NotNull Account account) throws TransactionException {
         if (!account.equals(getOrigin())) {
             throw new TransactionException("You cannot make a withdrawal into another account");
-        } if (account.getBalance() < getValue()) {
-            throw new TransactionException("Insufficient balance for withdrawal");
         }
 
         return account.getBalance() - getValue();
