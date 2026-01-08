@@ -6,7 +6,6 @@ import org.jetbrains.annotations.Range;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Stream;
 
 public final class Accounts implements Iterable<@NotNull Account> {
@@ -22,10 +21,6 @@ public final class Accounts implements Iterable<@NotNull Account> {
 
     public boolean remove(@Range(from = 0, to = Long.MAX_VALUE) long id) {
         return accounts.removeIf(account -> account.getId() == id);
-    }
-
-    public @NotNull Optional<@NotNull Account> get(@NotNull String email) {
-        return accounts.stream().filter(account -> account.getClient().getEmail().equalsIgnoreCase(email)).findFirst();
     }
 
     public @NotNull Stream<@NotNull Account> stream() {
