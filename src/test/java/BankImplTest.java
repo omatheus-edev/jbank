@@ -6,7 +6,6 @@ import codes.matheus.entity.client.ClientImpl;
 import codes.matheus.entity.client.data.CPF;
 import codes.matheus.entity.client.data.PhoneNumber;
 import codes.matheus.entity.transaction.Deposit;
-import codes.matheus.entity.transaction.Transaction;
 import codes.matheus.entity.transaction.Transference;
 import codes.matheus.entity.transaction.Withdrawal;
 import codes.matheus.exception.TransactionException;
@@ -59,13 +58,13 @@ public final class BankImplTest {
     void withdrawal() throws TransactionException {
         double initialBalance = checkingAccount1.getBalance();
 
-        @NotNull Withdrawal withdrawal = bank.withdrawal(checkingAccount1, 200);
+        @NotNull Withdrawal withdrawal = bank.withdraw(checkingAccount1, 200);
 
 
         assertEquals(initialBalance - 200.0, checkingAccount1.getBalance());
         assertTrue(bank.getTransactions().contains(withdrawal));
         assertThrows(TransactionException.class, () ->
-                bank.withdrawal(checkingAccount1, initialBalance + 1));
+                bank.withdraw(checkingAccount1, initialBalance + 1));
     }
 
     @Test
@@ -73,7 +72,6 @@ public final class BankImplTest {
         double originInitial = checkingAccount1.getBalance();
         double targetInitial = checkingAccount2.getBalance();
 
-        System.out.println(checkingAccount1.getBalance());
         @NotNull Transference transference = bank.transfer(checkingAccount1, checkingAccount2, 100.0);
 
         assertEquals(originInitial - 100.0, checkingAccount1.getBalance());
@@ -82,7 +80,7 @@ public final class BankImplTest {
         assertTrue(bank.getTransactions().contains(transference));
         assertTrue(checkingAccount1.getHistory().contains(transference));
         assertTrue(checkingAccount2.getHistory().contains(transference));
-        assertEquals(1, bank.getAllTransference().size());
+        assertEquals(1, bank.getTransfers().size());
 
         assertThrows(TransactionException.class, () -> bank.transfer(checkingAccount1, checkingAccount1, 200));
         assertThrows(TransactionException.class, () -> bank.transfer(checkingAccount1, checkingAccount2, -50.0));

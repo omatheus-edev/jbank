@@ -29,11 +29,11 @@ public interface Bank {
 
     @NotNull Accounts getAccounts();
 
-    @NotNull Set<@NotNull Transference> getAllTransference();
+    @NotNull Set<@NotNull Transference> getTransfers();
 
     @NotNull Deposit deposit(@NotNull Account account, @Range(from = 0, to = Long.MAX_VALUE) double value) throws TransactionException;
 
-    @NotNull Withdrawal withdrawal(@NotNull Account account, @Range(from = 0, to = Long.MAX_VALUE) double value) throws TransactionException;
+    @NotNull Withdrawal withdraw(@NotNull Account account, @Range(from = 0, to = Long.MAX_VALUE) double value) throws TransactionException;
 
     @NotNull Transference transfer(@NotNull Account origin, @NotNull Account target, @Range(from = 0, to = Long.MAX_VALUE) double amount) throws TransactionException;
 

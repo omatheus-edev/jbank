@@ -35,7 +35,7 @@ public final class BankImpl implements Bank {
     }
 
     @Override
-    public @NotNull Set<@NotNull Transference> getAllTransference() {
+    public @NotNull Set<@NotNull Transference> getTransfers() {
         return transactions.stream().filter(transaction -> transaction instanceof Transference)
                     .map(transaction -> (Transference) transaction).collect(Collectors.toSet());
     }
@@ -48,13 +48,15 @@ public final class BankImpl implements Bank {
     public @NotNull Deposit deposit(@NotNull Account account, @Range(from = 0, to = Long.MAX_VALUE) double value) throws TransactionException {
         @NotNull Deposit transaction = account.deposit(value);
         transactions.add(transaction);
+        account.getHistory().add(transaction);
         return transaction;
     }
 
     @Override
-    public @NotNull Withdrawal withdrawal(@NotNull Account account, @Range(from = 0, to = Long.MAX_VALUE) double value) throws TransactionException {
+    public @NotNull Withdrawal withdraw(@NotNull Account account, @Range(from = 0, to = Long.MAX_VALUE) double value) throws TransactionException {
         @NotNull Withdrawal transaction = account.withdraw(value);
         transactions.add(transaction);
+        account.getHistory().add(transaction);
         return transaction;
     }
 
@@ -69,9 +71,11 @@ public final class BankImpl implements Bank {
         }
 
         @NotNull Transference transaction = Transaction.transference(origin, target, amount);
-        origin.setBalance(transaction);
-        target.setBalance(transaction);
+        origin.setBalance(transaction.calculate(origin));
+        target.setBalance(transaction.calculate(target));
         transactions.add(transaction);
+        origin.getHistory().add(transaction);
+        target.getHistory().add(transaction);
         return transaction;
     }
 

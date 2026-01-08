@@ -35,7 +35,11 @@ public final class SavingsAccount extends Account implements Profitable {
             throw new TransactionException("The amount is zero or less than customer balance");
         }
         @NotNull Withdrawal withdrawal = Transaction.withdrawal(this, amount);
-        this.setBalance(withdrawal);
+        if (getHistory().contains(withdrawal)) {
+            throw new TransactionException("This account already has this transaction");
+        }
+        this.setBalance(withdrawal.calculate(this));
+        getHistory().add(withdrawal);
         return withdrawal;
     }
 
@@ -45,7 +49,11 @@ public final class SavingsAccount extends Account implements Profitable {
             throw new TransactionException("The amount is zero or less than customer balance");
         }
         @NotNull Deposit deposit = Transaction.deposit(this, amount);
-        this.setBalance(deposit);
+        if (getHistory().contains(deposit)) {
+            throw new TransactionException("This account already has this transaction");
+        }
+        this.setBalance(deposit.calculate(this));
+        getHistory().add(deposit);
         return deposit;
     }
 }

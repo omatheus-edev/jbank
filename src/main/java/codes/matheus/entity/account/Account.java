@@ -54,13 +54,8 @@ public abstract sealed class Account permits SavingsAccount, CheckingAccount {
 
     // Setter
 
-    public void setBalance(@NotNull Transaction transaction) throws TransactionException {
-        if (history.contains(transaction)) {
-            throw new TransactionException("This account already has this transaction");
-        } else {
-            this.balance = transaction.calculate(this);
-            this.history.add(transaction);
-        }
+    public void setBalance(@Range(from = 0, to = Long.MAX_VALUE) double value) throws TransactionException {
+        this.balance = value;
     }
 
     // Methods
@@ -81,6 +76,14 @@ public abstract sealed class Account permits SavingsAccount, CheckingAccount {
     @Override
     public int hashCode() {
         return Objects.hashCode(id);
+    }
+
+    @Override
+    public String toString() {
+        return "Account{" +
+                "id=" + id +
+                ", client=" + client +
+                '}';
     }
 
     // Classes

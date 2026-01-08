@@ -13,7 +13,7 @@ public final class Withdrawal extends Transaction {
     @Override
     public double calculate(@NotNull Account account) throws TransactionException {
         if (!account.equals(getOrigin())) {
-            throw new TransactionException("You cannot make a withdrawal into another account");
+            throw new TransactionException("You cannot make a withdraw into another account");
         }
 
         return account.getBalance() - getValue();
